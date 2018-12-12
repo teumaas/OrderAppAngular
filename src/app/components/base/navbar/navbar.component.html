@@ -1,0 +1,13 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a routerLink="/dashboard" class="navbar-brand" >{{ AppName }}</a>
+  <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+      <ul class="navbar-nav ml-auto">
+          <li *ngIf="auth.isLoggedIn()" class="nav-item pull-right">
+              <a class="nav-link" (click)="auth.logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Uitloggen</a>
+          </li>
+          <li *ngIf="auth.isLoggedIn()" class="nav-item pull-right">
+              <a class="nav-link"><i class="fa fa-user" aria-hidden="true"></i> Welkom, {{ details?.firstname + ' ' + details?.lastname }}</a>
+          </li>
+      </ul>
+  </div>
+</nav>

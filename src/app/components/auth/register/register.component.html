@@ -1,0 +1,24 @@
+<div class="form-signin-main  text-center">
+    <form class="form-signin" (submit)="register()">
+        <h1 class="h3 mb-3 font-weight-normal">Registeren</h1>
+
+        <label for="inputFirstname" class="sr-only">Voornaam</label>
+        <input type="firstname" id="inputFirstname" class="form-control" name="firstname" placeholder="Voornaam" [(ngModel)]="credentials.firstname" required autofocus>
+        
+        <label for="inputLastname" class="sr-only">Achternaam</label>
+        <input type="lastname" id="inputLastname" class="form-control" name="lastname" placeholder="Achternaam" [(ngModel)]="credentials.lastname" required autofocus>
+
+        <label for="inputEmail" class="sr-only">E-mail</label>
+        <input type="email" id="inputEmail" class="form-control" name="email" placeholder="E-mail" [(ngModel)]="credentials.email" required autofocus>
+
+        <label for="inputPassword" class="sr-only">Wachtwoord</label>
+        <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Wachtwoord" [(ngModel)]="credentials.password" required autofocus>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-6"><button class="btn btn-primary btn-block" routerLink="/login">Inloggen</button></div>
+            <div class="col-xs-12 col-md-6"><button class="btn btn-success btn-block" value="Register" type="submit">Registeren</button></div>
+        </div>
+        
+        <p class="mt-5 mb-3 text-muted">&copy; OrderApp 2018</p>
+    </form>
+</div>

@@ -1,0 +1,38 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid">
+    <app-sidebar></app-sidebar>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <div class="row">
+          <div class="col-md-12" style="margin-bottom:10px; margin-top:10px;">
+            <button type="button" class="btn btn-secondary" [routerLink]="['toevoegen']"><span class="fa fa-list-alt"></span> Menu toevoegen</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+              <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Titel</th>
+                      <th scope="col">Categorie</th>
+                      <th scope="col">Opties</th>
+                    </tr>
+                  </thead>
+                  <tbody> 
+                    <tr *ngFor="let menu of menus">
+                      <td>{{ menu?.title }}</td>
+                      <td>{{ menu?.category }}</td>
+                      <td>
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <button type="button" class="btn btn-warning btn-sm" [routerLink]="['bewerken', menu?._id]"><span class="fa fa-edit"></span></button>
+                            <button type="button" class="btn btn-danger btn-sm" (click)="deleteMenu(menu)"><span class="fa fa-trash"></span></button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+          </div>
+      </div>
+    </main>
+</div>

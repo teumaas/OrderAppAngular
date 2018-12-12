@@ -1,0 +1,40 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid">
+    <app-sidebar></app-sidebar>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <div class="row">
+          <div class="col-md-12" style="margin-bottom:10px; margin-top:10px;">
+            <button type="button" class="btn btn-secondary" [routerLink]="['toevoegen']"><span class="fa fa-list"></span> Categorie toevoegen</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+              <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Titel</th>
+                      <th scope="col">Producten</th>
+                      <th scope="col">Afbeelding</th>
+                      <th scope="col">Opties</th>
+                    </tr>
+                  </thead>
+                  <tbody> 
+                    <tr *ngFor="let category of categories">
+                      <td>{{ category?.title }}</td>
+                      <td>{{ category?.product }}</td>
+                      <td><img class="img-fluid" height="100" width="100" src="{{ category?.imagePath }}"></td>
+                      <td>
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <button type="button" class="btn btn-warning btn-sm" [routerLink]="['bewerken', category?._id]"><span class="fa fa-edit"></span></button>
+                            <button type="button" class="btn btn-danger btn-sm" (click)="deleteCategory(category)"><span class="fa fa-trash"></span></button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+          </div>
+      </div>
+    </main>
+</div>

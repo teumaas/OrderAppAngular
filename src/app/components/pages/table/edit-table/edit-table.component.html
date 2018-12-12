@@ -1,0 +1,37 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid">
+    <app-sidebar></app-sidebar>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <div class="row">
+          <div class="col-md-12" style="margin-bottom:15px; margin-top:15px;">
+            <button type="button" routerLink="/tables" class="btn btn-default" ><span class="fa fa-arrow-left"></span> Ga terug</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <form [formGroup]="editTableForm" (ngSubmit)="saveTable()">
+              <fieldset class="form-group">
+                  <input
+                      formControlName="number"
+                      placeholder="Nummer"
+                      class="form-control"
+                      type="text" />
+              </fieldset>
+              <fieldset class="form-group">
+                  <input
+                      formControlName="user"
+                      placeholder="Gebruikers"
+                      class="form-control"
+                      type="text" />
+              </fieldset>
+              <button class="btn btn-primary pull-xs-right" type="submit">
+                  Opslaan
+              </button>
+            
+            </form>
+          </div>
+      </div>
+    </main>
+</div>
