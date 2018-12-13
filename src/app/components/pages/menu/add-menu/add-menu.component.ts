@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { MenuService } from '../../../../services/menu.service';
+import { CategoryService } from '../../../../services/category.service';
+
 import { Menu } from '../../../../interfaces/Menu.interface';
 
 @Component({
@@ -13,8 +15,9 @@ import { Menu } from '../../../../interfaces/Menu.interface';
 export class AddMenuComponent implements OnInit {
 
   private addMenuForm: FormGroup;
+  public categories;
 
-  constructor(private fB: FormBuilder, private router: Router, private menuService: MenuService) {
+  constructor(private fB: FormBuilder, private router: Router, private menuService: MenuService, private categoryService: CategoryService) {
     this.addMenuForm = this.fB.group({
       'title': ['', Validators.required ],
       'category': ['', !Validators.required ],
@@ -22,7 +25,12 @@ export class AddMenuComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.categoryService.getCategories()
+    .subscribe(result => {
+      this.categories = result;
+    });
   }
+
 
   saveMenu(): void {
     const menu: Menu = {
@@ -30,7 +38,7 @@ export class AddMenuComponent implements OnInit {
       category: this.addMenuForm.value.category
     };
 
-    this.menuService.putMenu(menu)
+    this.menuService.postMenu(menu)
       .subscribe(
           () => this.onSaveComplete(),
           (error: any) => console.log(error));

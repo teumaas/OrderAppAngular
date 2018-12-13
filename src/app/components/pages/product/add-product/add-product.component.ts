@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { ProductService } from '../../../../services/product.service';
+import { CategoryService } from '../../../../services/category.service';
+
 import { Product } from '../../../../interfaces/Product.interface';
 
 @Component({
@@ -13,8 +15,10 @@ import { Product } from '../../../../interfaces/Product.interface';
 export class AddProductComponent implements OnInit {
 
   private newProductForm: FormGroup;
+  public categories;
 
-  constructor(private fB: FormBuilder, private router: Router, private productService: ProductService) {
+  // tslint:disable-next-line:max-line-length
+  constructor(private fB: FormBuilder, private router: Router, private productService: ProductService, private categoryService: CategoryService) {
     this.newProductForm = this.fB.group({
       'name': ['', Validators.required ],
       'brand': ['', Validators.required ],
@@ -27,6 +31,10 @@ export class AddProductComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.categoryService.getCategories()
+    .subscribe(result => {
+      this.categories = result;
+    });
   }
 
   saveProduct(): void {

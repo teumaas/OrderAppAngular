@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { ProductService } from '../../../../services/product.service';
+import { CategoryService } from '../../../../services/category.service';
+
 import { Product } from '../../../../interfaces/Product.interface';
 
 @Component({
@@ -15,9 +17,12 @@ export class EditProductComponent implements OnInit {
 
   private currentProduct: Product;
   private originalProduct: Product;
-  private editProductForm: FormGroup;
 
-  constructor(private fB: FormBuilder, private aRoute: ActivatedRoute, private router: Router, private productService: ProductService) {
+  private editProductForm: FormGroup;
+  public categories;
+
+  // tslint:disable-next-line:max-line-length
+  constructor(private fB: FormBuilder, private aRoute: ActivatedRoute, private router: Router, private productService: ProductService,  private categoryService: CategoryService) {
     this.editProductForm = this.fB.group({
       'name': ['', Validators.required ],
       'brand': ['', Validators.required ],
@@ -45,13 +50,17 @@ export class EditProductComponent implements OnInit {
     .subscribe(product => {
       this.onProductRetrieved(product);
     }, (err) => {
-      console.error(err + 'help');
+      console.error(err);
     });
   }
 
   onProductRetrieved(product: Product): void {
     this.product = product;
-    this.updateValues();
+    this.categoryService.getCategories()
+    .subscribe(result => {
+      this.categories = result;
+      this.updateValues();
+    });
   }
 
   updateValues() {
@@ -73,7 +82,7 @@ export class EditProductComponent implements OnInit {
       description: this.editProductForm.value.description,
       imagePath: this.editProductForm.value.imagePath,
       alcoholPercentage: this.editProductForm.value.alcoholPercentage,
-      category: this.editProductForm.value.category
+      category: this.categories
     };
 
     this.productService.putProduct(product)
@@ -84,5 +93,9 @@ export class EditProductComponent implements OnInit {
 
   onSaveComplete(): void {
     this.router.navigate(['/products']);
+  }
+
+  onCategorySelected(event) {
+    this.categories = event.target.value;
   }
 }

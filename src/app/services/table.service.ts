@@ -23,7 +23,7 @@ export class TableService {
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
-  private request(method: 'post'|'get'|'put'|'delete', type: 'tables'|'category', category?: Table): Observable<any> {
+  private request(method: 'post'|'get'|'put'|'delete', type: 'tables'|'table', table?: Table): Observable<any> {
     let base;
 
     switch (type) {
@@ -39,27 +39,27 @@ export class TableService {
         }
       break;
 
-      case 'category':
+      case 'table':
         switch (method) {
             case 'post':
-              base = this.http.post(`${this.APIUrl}/api/${type}`, category, this.httpOptions);
+              base = this.http.post(`${this.APIUrl}/api/${type}`, table, this.httpOptions);
             break;
 
             case 'put':
-              base = this.http.put(`${this.APIUrl}/api/${type}`, category, this.httpOptions);
+              base = this.http.put(`${this.APIUrl}/api/${type}`, table, this.httpOptions);
             break;
 
             case 'get':
-            base = this.http.request('get', `${this.APIUrl}/api/${type}/${category._id}`, {
+            base = this.http.request('get', `${this.APIUrl}/api/${type}/${table._id}`, {
                 headers: { Authorization: `Bearer ${this.auth.getToken()}` },
-                body: JSON.stringify(category)
+                body: JSON.stringify(table)
             });
             break;
 
             case 'delete':
-              base = this.http.request('delete', `${this.APIUrl}/api/${type}/${category._id}`, {
+              base = this.http.request('delete', `${this.APIUrl}/api/${type}/${table._id}`, {
                 headers: { Authorization: `Bearer ${this.auth.getToken()}` },
-                body: JSON.stringify(category)
+                body: JSON.stringify(table)
               });
             break;
 
@@ -87,21 +87,21 @@ export class TableService {
   }
 
   public getTable(_id: string): Observable<any> {
-    const category: Table = {
+    const table: Table = {
       _id: _id
     };
-    return this.request('get', 'category', category);
+    return this.request('get', 'table', table);
   }
 
-  public deleteTable(category: Table): Observable<any> {
-    return this.request('delete', 'category', category);
+  public deleteTable(table: Table): Observable<any> {
+    return this.request('delete', 'table', table);
   }
 
-  public putTable(category: Table): Observable<any> {
-    return this.request('put', 'category', category);
+  public putTable(table: Table): Observable<any> {
+    return this.request('put', 'table', table);
   }
 
-  public postTable(category: Table): Observable<any> {
-    return this.request('post', 'category', category);
+  public postTable(table: Table): Observable<any> {
+    return this.request('post', 'table', table);
   }
 }

@@ -20,11 +20,10 @@
                       type="text" />
               </fieldset>
               <fieldset class="form-group">
-                  <input
-                      formControlName="category"
-                      placeholder="Category"
-                      class="form-control"
-                      type="text" />
+                  <select class="form-control selector" (change)="onCategorySelected($event)">
+                          <option value="{{menu?.category._id}}" selected>{{menu?.category.title}}</option>
+                          <option *ngFor="let c of categories" value="{{c?._id}}">{{c?.title}}</option>
+                  </select>
               </fieldset>
               <button class="btn btn-primary pull-xs-right" type="submit">
                   Opslaan

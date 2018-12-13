@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { MenuService } from '../../../../services/menu.service';
+import { CategoryService } from '../../../../services/category.service';
+
 import { Menu } from '../../../../interfaces/Menu.interface';
 
 @Component({
@@ -15,8 +17,10 @@ export class EditMenuComponent implements OnInit {
   private currentMenu: Menu;
   private originalMenu: Menu;
   private editMenuForm: FormGroup;
+  private categories;
 
-  constructor(private fB: FormBuilder, private aRoute: ActivatedRoute, private router: Router, private menuService: MenuService) {
+  // tslint:disable-next-line:max-line-length
+  constructor(private fB: FormBuilder, private aRoute: ActivatedRoute, private router: Router, private menuService: MenuService, private categoryService: CategoryService) {
     this.editMenuForm = this.fB.group({
       'title': ['', Validators.required ],
       'category': ['', !Validators.required ],
@@ -39,13 +43,17 @@ export class EditMenuComponent implements OnInit {
     .subscribe(menu => {
       this.onMenuRetrieved(menu);
     }, (err) => {
-      console.error(err + 'help');
+      console.error(err);
     });
   }
 
   onMenuRetrieved(menu: Menu): void {
     this.menu = menu;
-    this.updateValues();
+    this.categoryService.getCategories()
+    .subscribe(result => {
+      this.categories = result;
+      this.updateValues();
+    });
   }
 
   updateValues() {
@@ -53,11 +61,11 @@ export class EditMenuComponent implements OnInit {
     this.editMenuForm.controls['category'].setValue(this.menu.category);
   }
 
-  saveProduct(): void {
+  saveMenu(): void {
     const menu: Menu = {
       _id: this.menu._id,
       title: this.editMenuForm.value.title,
-      category: this.editMenuForm.value.category
+      category: this.categories
     };
 
     this.menuService.putMenu(menu)
@@ -68,6 +76,10 @@ export class EditMenuComponent implements OnInit {
 
   onSaveComplete(): void {
     this.router.navigate(['/menus']);
+  }
+
+  onCategorySelected(event) {
+    this.categories = event.target.value;
   }
 
 }

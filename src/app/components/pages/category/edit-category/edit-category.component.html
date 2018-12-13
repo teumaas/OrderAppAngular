@@ -20,11 +20,10 @@
                       type="text" />
               </fieldset>
               <fieldset class="form-group">
-                  <input
-                      formControlName="product"
-                      placeholder="Producten"
-                      class="form-control"
-                      type="text" />
+                    <select class="form-control selector" (change)="onCategorySelected($event)">
+                            <option value="{{categories?.product._id}}" selected>{{categories?.product.name}}</option>
+                            <option *ngFor="let p of products" value="{{p?._id}}">{{p?.name}}</option>
+                    </select>
               </fieldset>
               <fieldset class="form-group">
                   <input

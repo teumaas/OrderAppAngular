@@ -22,7 +22,7 @@
                   <tbody> 
                     <tr *ngFor="let menu of menus">
                       <td>{{ menu?.title }}</td>
-                      <td>{{ menu?.category }}</td>
+                      <td>{{ menu?.category[0].title }}</td>
                       <td>
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                             <button type="button" class="btn btn-warning btn-sm" [routerLink]="['bewerken', menu?._id]"><span class="fa fa-edit"></span></button>

@@ -13,18 +13,14 @@
           <div class="col-md-12">
             <form [formGroup]="addOrderForm" (ngSubmit)="saveOrder()">
               <fieldset class="form-group">
-                  <input
-                      formControlName="product"
-                      placeholder="Producten"
-                      class="form-control"
-                      type="text" />
+                  <select class="form-control" formControlName="product">
+                      <option *ngFor="let p of products" value="{{p._id}}" >{{p.name}}</option>
+                  </select>
               </fieldset>
               <fieldset class="form-group">
-                  <input
-                      formControlName="table"
-                      placeholder="Tafel"
-                      class="form-control"
-                      type="text" />
+                  <select class="form-control" formControlName="table">
+                      <option *ngFor="let t of tables" value="{{t._id}}" >{{t.number}}</option>
+                  </select>
               </fieldset>
               <button class="btn btn-primary pull-xs-right" type="submit">
                   Opslaan

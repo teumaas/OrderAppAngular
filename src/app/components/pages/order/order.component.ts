@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../../../services/order.service';
+import { ProductService } from '../../../services/product.service';
+import { TableService } from '../../../services/table.service';
 import { Order } from '../../../interfaces/Order.interface';
+import { Product } from '../../../interfaces/Product.interface';
+import { Table } from '../../../interfaces/Table.interface';
 
 @Component({
   selector: 'app-order',
@@ -11,11 +15,21 @@ export class OrderComponent implements OnInit {
 
   private orders: Order;
 
-  constructor(private orderService: OrderService) { }
+  constructor(private orderService: OrderService, private productService: ProductService, private tableService: TableService) { }
 
   ngOnInit() {
     this.orderService.getOrders().subscribe(orders => {
       this.orders = orders;
+      this.productService.getProducts().subscribe(products => {
+        this.orders.product = products;
+        this.tableService.getTables().subscribe(tables => {
+          this.orders.table = tables;
+        }, (err) => {
+          console.error(err);
+        });
+      }, (err) => {
+        console.error(err);
+      });
     }, (err) => {
       console.error(err);
     });

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
+import { ProductService } from '../../../../services/product.service';
 import { CategoryService } from '../../../../services/category.service';
 import { Category } from '../../../../interfaces/Category.interface';
 
@@ -15,8 +16,10 @@ export class EditCategoryComponent implements OnInit {
   private currentCategory: Category;
   private originalCategory: Category;
   private editCategoryForm: FormGroup;
+  public products;
 
-  constructor(private fB: FormBuilder, private aRoute: ActivatedRoute, private router: Router, private categoryService: CategoryService) {
+  // tslint:disable-next-line:max-line-length
+  constructor(private fB: FormBuilder, private aRoute: ActivatedRoute, private router: Router, private categoryService: CategoryService, private productService: ProductService) {
     this.editCategoryForm = this.fB.group({
       'title': ['', Validators.required ],
       'product': ['', !Validators.required ],
@@ -40,13 +43,17 @@ export class EditCategoryComponent implements OnInit {
     .subscribe(category => {
       this.onCategoryRetrieved(category);
     }, (err) => {
-      console.error(err + 'help');
+      console.error(err);
     });
   }
 
   onCategoryRetrieved(category: Category): void {
     this.category = category;
-    this.updateValues();
+    this.productService.getProducts()
+    .subscribe(result => {
+      this.products = result;
+      this.updateValues();
+    });
   }
 
   updateValues() {
@@ -55,11 +62,11 @@ export class EditCategoryComponent implements OnInit {
     this.editCategoryForm.controls['imagePath'].setValue(this.category.imagePath);
   }
 
-  saveProduct(): void {
+  saveCategory(): void {
     const category: Category = {
       _id: this.category._id,
       title: this.editCategoryForm.value.title,
-      product: this.editCategoryForm.value.product,
+      product: this.products,
       imagePath: this.editCategoryForm.value.imagePath,
     };
 
@@ -73,4 +80,7 @@ export class EditCategoryComponent implements OnInit {
     this.router.navigate(['/categories']);
   }
 
+  onCategorySelected(event) {
+    this.products = event.target.value;
+  }
 }

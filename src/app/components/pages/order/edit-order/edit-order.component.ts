@@ -18,9 +18,8 @@ export class EditOrderComponent implements OnInit {
 
   constructor(private fB: FormBuilder, private aRoute: ActivatedRoute, private router: Router, private ordersService: OrderService) {
     this.editOrderForm = this.fB.group({
-      'title': ['', Validators.required ],
-      'product': ['', !Validators.required ],
-      'imagePath': ['', !Validators.required ],
+      'product': ['', Validators.required ],
+      'table': ['', Validators.required ]
     });
   }
 
@@ -40,7 +39,7 @@ export class EditOrderComponent implements OnInit {
     .subscribe(orders => {
       this.onOrderRetrieved(orders);
     }, (err) => {
-      console.error(err + 'help');
+      console.error(err);
     });
   }
 

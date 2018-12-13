@@ -16,8 +16,7 @@ export class AddTableComponent implements OnInit {
 
   constructor(private fB: FormBuilder, private router: Router, private tableService: TableService) {
     this.addTableForm = this.fB.group({
-      'number': ['', !Validators.required ],
-      'user': ['', !Validators.required ]
+      'number': ['', Validators.required ]
     });
   }
 
@@ -26,11 +25,10 @@ export class AddTableComponent implements OnInit {
 
   saveTable(): void {
     const table: Table = {
-      number: this.addTableForm.value.table,
-      user: this.addTableForm.value.user,
+      number: this.addTableForm.value.number
     };
 
-    this.tableService.putTable(table)
+    this.tableService.postTable(table)
       .subscribe(
           () => this.onSaveComplete(),
           (error: any) => console.log(error));

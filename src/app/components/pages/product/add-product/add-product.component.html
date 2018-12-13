@@ -45,14 +45,12 @@
                     formControlName="alcoholPercentage"
                     placeholder="Alcoholpercentage"
                     class="form-control"
-                    type="text" />
+                    type="number    " />
               </fieldset>
               <fieldset class="form-group">
-                <input
-                    formControlName="category"
-                    placeholder="Categorie"
-                    class="form-control"
-                    type="text" />
+                <select class="form-control" formControlName="category">
+                    <option *ngFor="let c of categories" value="{{c._id}}" >{{c.title}}</option>
+                </select>
               </fieldset>
               <fieldset class="form-group">
                 <input
@@ -69,4 +67,4 @@
           </div>
       </div>
     </main>
-</div>
+</div>  

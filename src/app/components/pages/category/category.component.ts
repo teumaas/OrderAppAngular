@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../../../services/category.service';
+import { ProductService } from '../../../services/product.service';
 import { Category } from '../../../interfaces/Category.interface';
 
 @Component({
@@ -11,11 +12,16 @@ export class CategoryComponent implements OnInit {
 
   private categories: Category;
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService, private productService: ProductService) { }
 
   ngOnInit() {
     this.categoryService.getCategories().subscribe(categories => {
       this.categories = categories;
+      this.productService.getProducts().subscribe(products => {
+        this.categories.product = products;
+      }, (err) => {
+        console.error(err);
+      });
     }, (err) => {
       console.error(err);
     });

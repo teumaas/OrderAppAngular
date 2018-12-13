@@ -31,7 +31,7 @@
                       <td>{{ product?.description | slice:0:50 }}...</td>
                       <td><img class="img-fluid" height="100" width="100" src="{{ product?.imagePath }}"></td>
                       <td>{{ (product?.alcoholPercentage / 100) | percent:'0.1-2' }}</td>
-                      <td>{{ product?.category }}</td>
+                      <td>{{ product?.category.title }}</td>
                       <td>{{ product.price | currency: '€ ' }}</td>
                       <td>
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">

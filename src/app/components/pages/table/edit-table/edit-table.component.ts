@@ -18,9 +18,7 @@ export class EditTableComponent implements OnInit {
 
   constructor(private fB: FormBuilder, private aRoute: ActivatedRoute, private router: Router, private tableService: TableService) {
     this.editTableForm = this.fB.group({
-      'title': ['', Validators.required ],
-      'product': ['', !Validators.required ],
-      'imagePath': ['', !Validators.required ],
+      'number': ['', Validators.required ],
     });
   }
 
@@ -40,7 +38,7 @@ export class EditTableComponent implements OnInit {
     .subscribe(table => {
       this.onTableRetrieved(table);
     }, (err) => {
-      console.error(err + 'help');
+      console.error(err);
     });
   }
 
@@ -51,14 +49,12 @@ export class EditTableComponent implements OnInit {
 
   updateValues() {
     this.editTableForm.controls['number'].setValue(this.table.number);
-    this.editTableForm.controls['user'].setValue(this.table.user);
   }
 
-  saveProduct(): void {
+  saveTable(): void {
     const table: Table = {
       _id: this.table._id,
-      number: this.editTableForm.value.number,
-      user: this.editTableForm.value.user,
+      number: this.editTableForm.value.number
     };
 
     this.tableService.putTable(table)

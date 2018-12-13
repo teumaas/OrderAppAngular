@@ -23,7 +23,7 @@
                   <tbody> 
                     <tr *ngFor="let category of categories">
                       <td>{{ category?.title }}</td>
-                      <td>{{ category?.product }}</td>
+                      <td>{{ category?.product[0].name }}</td>
                       <td><img class="img-fluid" height="100" width="100" src="{{ category?.imagePath }}"></td>
                       <td>
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">

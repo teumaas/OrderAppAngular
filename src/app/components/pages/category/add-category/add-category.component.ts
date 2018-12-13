@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { CategoryService } from '../../../../services/category.service';
+import { ProductService } from '../../../../services/product.service';
+
 import { Category } from '../../../../interfaces/Category.interface';
 
 @Component({
@@ -13,8 +15,10 @@ import { Category } from '../../../../interfaces/Category.interface';
 export class AddCategoryComponent implements OnInit {
 
   private addCategoryForm: FormGroup;
+  public products;
 
-  constructor(private fB: FormBuilder, private router: Router, private categoryService: CategoryService) {
+  // tslint:disable-next-line:max-line-length
+  constructor(private fB: FormBuilder, private router: Router, private categoryService: CategoryService, private productService: ProductService) {
     this.addCategoryForm = this.fB.group({
       'title': ['', Validators.required ],
       'product': ['', !Validators.required ],
@@ -23,6 +27,10 @@ export class AddCategoryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.productService.getProducts()
+    .subscribe(result => {
+      this.products = result;
+    });
   }
 
   saveCategory(): void {
@@ -32,7 +40,7 @@ export class AddCategoryComponent implements OnInit {
       imagePath: this.addCategoryForm.value.imagePath
     };
 
-    this.categoryService.putCategory(category)
+    this.categoryService.postCategory(category)
       .subscribe(
           () => this.onSaveComplete(),
           (error: any) => console.log(error));
@@ -41,5 +49,4 @@ export class AddCategoryComponent implements OnInit {
   onSaveComplete(): void {
     this.router.navigate(['/categories']);
   }
-
 }
