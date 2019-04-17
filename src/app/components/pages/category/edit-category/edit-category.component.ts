@@ -17,14 +17,11 @@ export class EditCategoryComponent implements OnInit {
   public originalCategory: Category;
   public editCategoryForm: FormGroup;
   public products;
+  submitted = false;
 
   // tslint:disable-next-line:max-line-length
   constructor(public fB: FormBuilder, public aRoute: ActivatedRoute, public router: Router, public categoryService: CategoryService, public productService: ProductService) {
-    this.editCategoryForm = this.fB.group({
-      'title': ['', Validators.required ],
-      'product': ['', !Validators.required ],
-      'imagePath': ['', !Validators.required ],
-    });
+
   }
 
   get category(): Category {
@@ -37,6 +34,11 @@ export class EditCategoryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.editCategoryForm = this.fB.group({
+      'title': ['', Validators.required ],
+      'product': ['', Validators.required ]
+    });
+
     let id: string;
     this.aRoute.paramMap.subscribe(params => id = params.get('id'));
     this.categoryService.getCategory(id)
@@ -59,28 +61,31 @@ export class EditCategoryComponent implements OnInit {
   updateValues() {
     this.editCategoryForm.controls['title'].setValue(this.category.title);
     this.editCategoryForm.controls['product'].setValue(this.category.product);
-    this.editCategoryForm.controls['imagePath'].setValue(this.category.imagePath);
   }
 
   saveCategory(): void {
     const category: Category = {
       _id: this.category._id,
       title: this.editCategoryForm.value.title,
-      product: this.products,
-      imagePath: this.editCategoryForm.value.imagePath,
+      product: this.products
     };
+    this.submitted = true;
 
-    this.categoryService.putCategory(category)
+    if (this.editCategoryForm.valid) {
+      this.categoryService.putCategory(category)
       .subscribe(
           () => this.onSaveComplete(),
           (error: any) => console.log(error));
+      }
   }
 
   onSaveComplete(): void {
     this.router.navigate(['/categories']);
   }
 
-  onCategorySelected(event) {
+  onProductSelected(event) {
     this.products = event.target.value;
   }
+
+  get f() { return this.editCategoryForm.controls; }
 }

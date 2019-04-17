@@ -17,16 +17,19 @@ export class AddOrderComponent implements OnInit {
   public addOrderForm: FormGroup;
   public products;
   public tables;
+  public submitted = false;
 
   // tslint:disable-next-line:max-line-length
   constructor(public fB: FormBuilder, public router: Router, public orderService: OrderService, public productService: ProductService, public tableService: TableService) {
+
+  }
+
+  ngOnInit() {
     this.addOrderForm = this.fB.group({
       'product': ['', Validators.required ],
       'table': ['', Validators.required ]
     });
-  }
 
-  ngOnInit() {
     this.productService.getProducts()
     .subscribe(result => {
       this.products = result;
@@ -44,14 +47,20 @@ export class AddOrderComponent implements OnInit {
       table: this.addOrderForm.value.table
     };
 
-    this.orderService.postOrder(order)
+    this.submitted = true;
+
+    if (this.addOrderForm.valid) {
+      this.orderService.postOrder(order)
       .subscribe(
           () => this.onSaveComplete(),
           (error: any) => console.log(error));
+    }
   }
 
   onSaveComplete(): void {
     this.router.navigate(['/orders']);
   }
+
+  get f() { return this.addOrderForm.controls; }
 
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 
 import { ProductService } from '../../../../services/product.service';
 import { CategoryService } from '../../../../services/category.service';
@@ -20,15 +20,14 @@ export class AddProductComponent implements OnInit {
 
   // tslint:disable-next-line:max-line-length
   constructor(private fB: FormBuilder, private router: Router, private productService: ProductService, private categoryService: CategoryService) {
-   }
+  }
 
   ngOnInit() {
     this.newProductForm = this.fB.group({
       'name': ['', Validators.required ],
       'brand': ['', Validators.required ],
       'description': ['', Validators.required ],
-      'imagePath': ['', !Validators.required ],
-      'alcoholPercentage': [!Validators.required, Validators.pattern('[0-9]*')],
+      'alcoholPercentage': ['', Validators.required ],
       'category': ['', !Validators.required ],
       'price': ['', Validators.required],
     });
@@ -43,11 +42,10 @@ export class AddProductComponent implements OnInit {
     const product: Product = {
       name: this.newProductForm.value.name,
       brand: this.newProductForm.value.brand,
-      price: this.newProductForm.value.price,
       description: this.newProductForm.value.description,
-      imagePath: this.newProductForm.value.imagePath,
       alcoholPercentage: this.newProductForm.value.alcoholPercentage,
-      category: this.newProductForm.value.category
+      category: this.newProductForm.value.category,
+      price: this.newProductForm.value.price
     };
 
     this.submitted = true;

@@ -1,18 +1,30 @@
 <div class="form-signin-main  text-center">
-    <form class="form-signin" (submit)="register()">
+    <form class="form-signin" (ngSubmit)="register()" [formGroup]="registerForm">
         <h1 class="h3 mb-3 font-weight-normal">Registeren</h1>
 
         <label for="inputFirstname" class="sr-only">Voornaam</label>
-        <input type="firstname" id="inputFirstname" class="form-control" name="firstname" placeholder="Voornaam" [(ngModel)]="credentials.firstname" required autofocus>
-        
+        <input formControlName="firstname"type="firstname" class="form-control" placeholder="Voornaam" [ngClass]="{ 'is-invalid help-block': submitted && f.firstname.errors }" >
+        <div class="invalid-feedback" style="padding-bottom: 5px; padding-top: 5px;" *ngIf="submitted && f.firstname.errors">
+            <div style="color: #dc3545" *ngIf="f.firstname.errors.required">Voornaam is verplicht!</div>
+        </div>
+
         <label for="inputLastname" class="sr-only">Achternaam</label>
-        <input type="lastname" id="inputLastname" class="form-control" name="lastname" placeholder="Achternaam" [(ngModel)]="credentials.lastname" required autofocus>
+        <input formControlName="lastname" type="lastname" class="form-control" placeholder="Achternaam" [ngClass]="{ 'is-invalid help-block': submitted && f.lastname.errors }" >
+        <div class="invalid-feedback" style="padding-bottom: 5px; padding-top: 5px;" *ngIf="submitted && f.lastname.errors">
+            <div style="color: #dc3545" *ngIf="f.lastname.errors.required">Achternaam is verplicht!</div>
+        </div>
 
         <label for="inputEmail" class="sr-only">E-mail</label>
-        <input type="email" id="inputEmail" class="form-control" name="email" placeholder="E-mail" [(ngModel)]="credentials.email" required autofocus>
+        <input formControlName="email" type="email" class="form-control" placeholder="E-mail" [ngClass]="{ 'is-invalid help-block': submitted && f.email.errors }">
+        <div class="invalid-feedback" style="padding-bottom: 5px; padding-top: 5px;" *ngIf="submitted && f.email.errors">
+            <div style="color: #dc3545" *ngIf="f.email.errors.required">E-mail is verplicht of geen geldig e-mailadres</div>
+        </div>
 
         <label for="inputPassword" class="sr-only">Wachtwoord</label>
-        <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Wachtwoord" [(ngModel)]="credentials.password" required autofocus>
+        <input formControlName="password" type="password" class="form-control" placeholder="Wachtwoord" [ngClass]="{ 'is-invalid help-block': submitted && f.password.errors }">
+        <div class="invalid-feedback" style="padding-bottom: 5px; padding-top: -10px;" *ngIf="submitted && f.password.errors">
+            <div style="color: #dc3545" *ngIf="f.password.errors.required">Password is verplicht!</div>
+        </div>
 
         <div class="row">
             <div class="col-xs-12 col-md-6"><button class="btn btn-primary btn-block" routerLink="/login">Inloggen</button></div>

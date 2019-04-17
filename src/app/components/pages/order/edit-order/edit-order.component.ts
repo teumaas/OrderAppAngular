@@ -4,6 +4,8 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { OrderService } from '../../../../services/order.service';
 import { Order } from '../../../../interfaces/Order.interface';
+import { ProductService } from '../../../../services/product.service';
+import { TableService } from '../../../../services/table.service';
 
 @Component({
   selector: 'app-edit-order',
@@ -15,8 +17,11 @@ export class EditOrderComponent implements OnInit {
   public currentOrder: Order;
   public originalOrder: Order;
   public editOrderForm: FormGroup;
+  public products;
+  public tables;
 
-  constructor(public fB: FormBuilder, public aRoute: ActivatedRoute, public router: Router, public ordersService: OrderService) {
+  // tslint:disable-next-line:max-line-length
+  constructor(public fB: FormBuilder, public aRoute: ActivatedRoute, public router: Router, public ordersService: OrderService, public productService: ProductService, public tableService: TableService) {
     this.editOrderForm = this.fB.group({
       'product': ['', Validators.required ],
       'table': ['', Validators.required ]
@@ -40,6 +45,16 @@ export class EditOrderComponent implements OnInit {
       this.onOrderRetrieved(orders);
     }, (err) => {
       console.error(err);
+    });
+
+    this.productService.getProducts()
+    .subscribe(result => {
+      this.products = result;
+    });
+
+    this.tableService.getTables()
+    .subscribe(result => {
+      this.tables = result;
     });
   }
 
@@ -67,7 +82,7 @@ export class EditOrderComponent implements OnInit {
   }
 
   onSaveComplete(): void {
-    this.router.navigate(['/order']);
+    this.router.navigate(['/orders']);
   }
 
 }

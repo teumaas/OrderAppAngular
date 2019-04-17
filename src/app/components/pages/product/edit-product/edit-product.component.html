@@ -17,48 +17,78 @@
                       formControlName="name"
                       placeholder="Naam"
                       class="form-control"
-                      type="text" />
+                      type="text"
+                      [ngClass]="{ 'is-invalid help-block': submitted && f.name.errors }"
+                      />
+                      <div *ngIf="submitted && f.name.errors" class="help-block">
+                          <div style="color: #dc3545" *ngIf="f.name.errors.required">Naam is verplicht!</div>
+                      </div>
               </fieldset>
               <fieldset class="form-group">
                   <input
                       formControlName="brand"
                       placeholder="Merk"
                       class="form-control"
-                      type="text" />
+                      type="text"                      
+                      [ngClass]="{ 'is-invalid help-block': submitted && f.brand.errors }" />
+                      <div *ngIf="submitted && f.brand.errors" class="help-block">
+                          <div style="color: #dc3545" *ngIf="f.brand.errors.required">Merknaam is verplicht!</div>
+                      </div>
               </fieldset>
               <fieldset class="form-group">
                   <input
                       formControlName="description"
                       placeholder="Beschrijving"
                       class="form-control"
-                      type="text" />
+                      type="text"
+                      [ngClass]="{ 'is-invalid help-block': submitted && f.description.errors }" />
+                      <div *ngIf="submitted && f.description.errors" class="help-block">
+                          <div style="color: #dc3545" *ngIf="f.description.errors.required">Beschrijving is verplicht!</div>
+                      </div>
               </fieldset>
               <fieldset class="form-group">
                 <input
                     formControlName="imagePath"
                     placeholder="Afbeelding"
                     class="form-control"
-                    type="text" />
+                    type="text"
+                    [ngClass]="{ 'is-invalid help-block': submitted && f.imagePath.errors }" />
+                    <div *ngIf="submitted && f.imagePath.errors" class="help-block">
+                        <div style="color: #dc3545" *ngIf="f.imagePath.errors.required">Afbeelding is verplicht!</div>
+                    </div>
               </fieldset>
               <fieldset class="form-group">
                 <input
                     formControlName="alcoholPercentage"
                     placeholder="Alcoholpercentage"
                     class="form-control"
-                    type="text" />
+                    type="text"
+                    [ngClass]="{ 'is-invalid help-block': submitted && f.alcoholPercentage.errors }" />
+                    <div *ngIf="submitted && f.alcoholPercentage.errors" class="help-block">
+                        <div style="color: #dc3545" *ngIf="f.alcoholPercentage.errors.required">Alcoholpercentage is verplicht! [0.0-9.9]</div>
+                    </div>
               </fieldset>
               <fieldset class="form-group">
-                    <select class="form-control selector" (change)="onCategorySelected($event)">
-                            <option value="{{product?.category?._id}}" selected>{{product?.category?.title}}</option>
-                            <option *ngFor="let c of categories" value="{{c?._id}}">{{c?.title}}</option>
+                    <select class="custom-select" 
+                            (change)="onCategorySelected($event)" 
+                            [ngClass]="{ 'is-invalid help-block': submitted && f.category.errors }">
+                        <option disabled>Selecteer categorie...</option>
+                        <option *ngFor="let c of categories" value="{{c._id}}" selected>{{c.title}}</option>
                     </select>
+                    <div *ngIf="submitted && f.category.errors" class="help-block">
+                      <div style="color: #dc3545" *ngIf="f.category.errors.required">Categorie is verplicht!</div>
+                  </div>
               </fieldset>
               <fieldset class="form-group">
                 <input
                     formControlName="price"
                     placeholder="Prijs"
                     class="form-control"
-                    type="number" />
+                    type="number"
+                    [ngClass]="{ 'is-invalid help-block': submitted && f.price.errors }" />
+                    <div *ngIf="submitted && f.price.errors" class="help-block">
+                        <div style="color: #dc3545" *ngIf="f.price.errors.required">Prijs is verplicht! [0.0-9.9]</div>
+                    </div>
               </fieldset>
               <button class="btn btn-primary pull-xs-right" type="submit">
                   Opslaan

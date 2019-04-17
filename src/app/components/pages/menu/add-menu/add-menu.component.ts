@@ -16,15 +16,17 @@ export class AddMenuComponent implements OnInit {
 
   public addMenuForm: FormGroup;
   public categories;
+  public submitted = false;
 
   constructor(public fB: FormBuilder, public router: Router, public menuService: MenuService, public categoryService: CategoryService) {
-    this.addMenuForm = this.fB.group({
-      'title': ['', Validators.required ],
-      'category': ['', !Validators.required ],
-    });
   }
 
   ngOnInit() {
+    this.addMenuForm = this.fB.group({
+      'title': ['', Validators.required ],
+      'category': ['', Validators.required ],
+    });
+
     this.categoryService.getCategories()
     .subscribe(result => {
       this.categories = result;
@@ -38,14 +40,19 @@ export class AddMenuComponent implements OnInit {
       category: this.addMenuForm.value.category
     };
 
-    this.menuService.postMenu(menu)
+    this.submitted = true;
+
+    if (this.addMenuForm.valid) {
+      this.menuService.postMenu(menu)
       .subscribe(
           () => this.onSaveComplete(),
           (error: any) => console.log(error));
+    }
   }
 
   onSaveComplete(): void {
     this.router.navigate(['/menus']);
   }
 
+  get f() { return this.addMenuForm.controls; }
 }

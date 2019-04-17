@@ -17,13 +17,20 @@
                       formControlName="title"
                       placeholder="Titel"
                       class="form-control"
-                      type="text" />
+                      type="text"                      
+                      [ngClass]="{ 'is-invalid help-block': submitted && f.title.errors }" />
+                      <div *ngIf="submitted && f.title.errors" class="help-block">
+                          <div style="color: #dc3545" *ngIf="f.title.errors.required">Titel is verplicht!</div>
+                      </div>
               </fieldset>
               <fieldset class="form-group">
-                  <select class="form-control selector" (change)="onCategorySelected($event)">
-                          <option value="{{menu?.category?._id}}" selected>{{menu?.category?.title}}</option>
+                  <select class="custom-select" (change)="onCategorySelected($event)" [ngClass]="{ 'is-invalid help-block': submitted && f.category.errors }">
+                          <option selected disabled>Selecteer categorie...</option>
                           <option *ngFor="let c of categories" value="{{c?._id}}">{{c?.title}}</option>
                   </select>
+                  <div *ngIf="submitted && f.category.errors" class="help-block">
+                      <div style="color: #dc3545" *ngIf="f.category.errors.required">Categorie is verplicht!</div>
+                  </div>
               </fieldset>
               <button class="btn btn-primary pull-xs-right" type="submit">
                   Opslaan

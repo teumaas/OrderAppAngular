@@ -16,7 +16,6 @@
                     <tr>
                       <th scope="col">Titel</th>
                       <th scope="col">Producten</th>
-                      <th scope="col">Afbeelding</th>
                       <th scope="col">Opties</th>
                     </tr>
                   </thead>
@@ -24,7 +23,6 @@
                     <tr *ngFor="let category of categories">
                       <td>{{ category?.title }}</td>
                       <td>{{ category?.product[0]?.name }}</td>
-                      <td><img class="img-fluid" height="100" width="100" src="{{ category?.imagePath }}"></td>
                       <td>
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                             <button type="button" class="btn btn-warning btn-sm" [routerLink]="['bewerken', category?._id]"><span class="fa fa-edit"></span></button>

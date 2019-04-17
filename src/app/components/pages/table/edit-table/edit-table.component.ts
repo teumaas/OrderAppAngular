@@ -15,6 +15,7 @@ export class EditTableComponent implements OnInit {
   public currentTable: Table;
   public originalTable: Table;
   public editTableForm: FormGroup;
+  public submitted;
 
   constructor(public fB: FormBuilder, public aRoute: ActivatedRoute, public router: Router, public tableService: TableService) {
     this.editTableForm = this.fB.group({
@@ -32,6 +33,10 @@ export class EditTableComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.editTableForm = this.fB.group({
+      'number': ['', Validators.required ]
+    });
+
     let id: string;
     this.aRoute.paramMap.subscribe(params => id = params.get('id'));
     this.tableService.getTable(id)
@@ -57,14 +62,19 @@ export class EditTableComponent implements OnInit {
       number: this.editTableForm.value.number
     };
 
+    this.submitted = true;
+
+    if (this.editTableForm.valid) {
     this.tableService.putTable(table)
       .subscribe(
           () => this.onSaveComplete(),
           (error: any) => console.log(error));
+    }
   }
 
   onSaveComplete(): void {
     this.router.navigate(['/tables']);
   }
 
+  get f() { return this.editTableForm.controls; }
 }

@@ -13,14 +13,24 @@
           <div class="col-md-12">
             <form [formGroup]="addOrderForm" (ngSubmit)="saveOrder()">
               <fieldset class="form-group">
-                  <select class="form-control" formControlName="product">
+                  <select class="custom-select" formControlName="product"
+                  [ngClass]="{ 'is-invalid help-block': submitted && f.product.errors }">
+                      <option selected disabled>Selecteer product...</option>
                       <option *ngFor="let p of products" value="{{p._id}}" >{{p.name}}</option>
                   </select>
+                  <div *ngIf="submitted && f.product.errors" class="help-block">
+                      <div style="color: #dc3545" *ngIf="f.product.errors.required">Product is verplicht!</div>
+                  </div>
               </fieldset>
               <fieldset class="form-group">
-                  <select class="form-control" formControlName="table">
+                  <select class="custom-select" formControlName="table"
+                  [ngClass]="{ 'is-invalid help-block': submitted && f.table.errors }">
+                      <option selected disabled>Selecteer tafel...</option>
                       <option *ngFor="let t of tables" value="{{t._id}}" >{{t.number}}</option>
                   </select>
+                  <div *ngIf="submitted && f.table.errors" class="help-block">
+                      <div style="color: #dc3545" *ngIf="f.table.errors.required">Table is verplicht!</div>
+                  </div>
               </fieldset>
               <button class="btn btn-primary pull-xs-right" type="submit">
                   Opslaan

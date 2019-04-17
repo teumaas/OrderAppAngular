@@ -20,6 +20,7 @@ export class EditProductComponent implements OnInit {
 
   public editProductForm: FormGroup;
   public categories;
+  submitted = false;
 
   // tslint:disable-next-line:max-line-length
   constructor(private fB: FormBuilder, private aRoute: ActivatedRoute, private router: Router, private productService: ProductService,  private categoryService: CategoryService) {
@@ -44,6 +45,15 @@ export class EditProductComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.editProductForm = this.fB.group({
+      'name': ['', Validators.required ],
+      'brand': ['', Validators.required ],
+      'description': ['', Validators.required ],
+      'alcoholPercentage': ['', Validators.required ],
+      'category': ['', Validators.required ],
+      'price': ['', Validators.required],
+    });
+
     let id: string;
     this.aRoute.paramMap.subscribe(params => id = params.get('id'));
     this.productService.getProduct(id)
@@ -53,6 +63,8 @@ export class EditProductComponent implements OnInit {
       console.error(err);
     });
   }
+
+  get f() { return this.editProductForm.controls; }
 
   onProductRetrieved(product: Product): void {
     this.product = product;
@@ -68,7 +80,6 @@ export class EditProductComponent implements OnInit {
     this.editProductForm.controls['brand'].setValue(this.product.brand);
     this.editProductForm.controls['description'].setValue(this.product.description);
     this.editProductForm.controls['price'].setValue(this.product.price);
-    this.editProductForm.controls['imagePath'].setValue(this.product.imagePath);
     this.editProductForm.controls['alcoholPercentage'].setValue(this.product.alcoholPercentage);
     this.editProductForm.controls['category'].setValue(this.product.category);
   }
@@ -80,15 +91,17 @@ export class EditProductComponent implements OnInit {
       brand: this.editProductForm.value.brand,
       price: this.editProductForm.value.price,
       description: this.editProductForm.value.description,
-      imagePath: this.editProductForm.value.imagePath,
       alcoholPercentage: this.editProductForm.value.alcoholPercentage,
       category: this.categories
     };
+    this.submitted = true;
 
+    if (this.editProductForm.valid) {
     this.productService.putProduct(product)
       .subscribe(
           () => this.onSaveComplete(),
           (error: any) => console.log(error));
+    }
   }
 
   onSaveComplete(): void {

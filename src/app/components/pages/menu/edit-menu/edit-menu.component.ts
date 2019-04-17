@@ -18,13 +18,11 @@ export class EditMenuComponent implements OnInit {
   public originalMenu: Menu;
   public editMenuForm: FormGroup;
   public categories;
+  public submitted = false;
 
   // tslint:disable-next-line:max-line-length
   constructor(public fB: FormBuilder, public aRoute: ActivatedRoute, public router: Router, public menuService: MenuService, public categoryService: CategoryService) {
-    this.editMenuForm = this.fB.group({
-      'title': ['', Validators.required ],
-      'category': ['', !Validators.required ],
-    });
+
   }
 
   get menu(): Menu {
@@ -37,6 +35,11 @@ export class EditMenuComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.editMenuForm = this.fB.group({
+      'title': ['', Validators.required ],
+      'category': ['', !Validators.required ],
+    });
+
     let id: string;
     this.aRoute.paramMap.subscribe(params => id = params.get('id'));
     this.menuService.getMenu(id)
@@ -68,10 +71,14 @@ export class EditMenuComponent implements OnInit {
       category: this.categories
     };
 
-    this.menuService.putMenu(menu)
+    this.submitted = true;
+
+    if (this.editMenuForm.valid) {
+      this.menuService.putMenu(menu)
       .subscribe(
           () => this.onSaveComplete(),
           (error: any) => console.log(error));
+    }
   }
 
   onSaveComplete(): void {
@@ -82,4 +89,5 @@ export class EditMenuComponent implements OnInit {
     this.categories = event.target.value;
   }
 
+  get f() { return this.editMenuForm.controls; }
 }

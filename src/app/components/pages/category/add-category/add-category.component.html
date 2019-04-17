@@ -17,19 +17,21 @@
                       formControlName="title"
                       placeholder="Titel"
                       class="form-control"
-                      type="text" />
+                      type="text" 
+                      [ngClass]="{ 'is-invalid help-block': submitted && f.title.errors }" />
+                      <div *ngIf="submitted && f.title.errors" class="help-block">
+                          <div style="color: #dc3545" *ngIf="f.title.errors.required">Titel is verplicht!</div>
+                      </div>
               </fieldset>
               <fieldset class="form-group">
-                    <select class="form-control" formControlName="product">
+                    <select class="custom-select" formControlName="product"
+                    [ngClass]="{ 'is-invalid help-block': submitted && f.product.errors }">
+                        <option selected disabled>Selecteer product...</option>
                         <option *ngFor="let p of products" value="{{p._id}}" >{{p.name}}</option>
                     </select>
-              </fieldset>
-              <fieldset class="form-group">
-                  <input
-                      formControlName="imagePath"
-                      placeholder="Afbeelding"
-                      class="form-control"
-                      type="text" />
+                    <div *ngIf="submitted && f.product.errors" class="help-block">
+                        <div style="color: #dc3545" *ngIf="f.product.errors.required">Product is verplicht!</div>
+                    </div>
               </fieldset>
               <button class="btn btn-primary pull-xs-right" type="submit">
                   Opslaan

@@ -16,17 +16,18 @@ export class AddCategoryComponent implements OnInit {
 
   public addCategoryForm: FormGroup;
   public products;
+  public submitted = false;
 
   // tslint:disable-next-line:max-line-length
   constructor(public fB: FormBuilder, public router: Router, public categoryService: CategoryService, public productService: ProductService) {
-    this.addCategoryForm = this.fB.group({
-      'title': ['', Validators.required ],
-      'product': ['', !Validators.required ],
-      'imagePath': ['', !Validators.required ],
-    });
   }
 
   ngOnInit() {
+    this.addCategoryForm = this.fB.group({
+      'title': ['', Validators.required ],
+      'product': ['', Validators.required ]
+    });
+
     this.productService.getProducts()
     .subscribe(result => {
       this.products = result;
@@ -36,17 +37,22 @@ export class AddCategoryComponent implements OnInit {
   saveCategory(): void {
     const category: Category = {
       title: this.addCategoryForm.value.title,
-      product: this.addCategoryForm.value.product,
-      imagePath: this.addCategoryForm.value.imagePath
+      product: this.addCategoryForm.value.product
     };
 
+    this.submitted = true;
+
+    if (this.addCategoryForm.valid) {
     this.categoryService.postCategory(category)
       .subscribe(
           () => this.onSaveComplete(),
           (error: any) => console.log(error));
+    }
   }
 
   onSaveComplete(): void {
     this.router.navigate(['/categories']);
   }
+
+  get f() { return this.addCategoryForm.controls; }
 }
