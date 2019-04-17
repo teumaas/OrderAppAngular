@@ -28,7 +28,6 @@ export class EditProductComponent implements OnInit {
       'name': ['', Validators.required ],
       'brand': ['', Validators.required ],
       'description': ['', Validators.required ],
-      'imagePath': ['', !Validators.required ],
       'alcoholPercentage': ['', !Validators.required ],
       'category': ['', !Validators.required ],
       'price': ['', Validators.required ],

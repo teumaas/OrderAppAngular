@@ -48,17 +48,6 @@
               </fieldset>
               <fieldset class="form-group">
                 <input
-                    formControlName="imagePath"
-                    placeholder="Afbeelding"
-                    class="form-control"
-                    type="text"
-                    [ngClass]="{ 'is-invalid help-block': submitted && f.imagePath.errors }" />
-                    <div *ngIf="submitted && f.imagePath.errors" class="help-block">
-                        <div style="color: #dc3545" *ngIf="f.imagePath.errors.required">Afbeelding is verplicht!</div>
-                    </div>
-              </fieldset>
-              <fieldset class="form-group">
-                <input
                     formControlName="alcoholPercentage"
                     placeholder="Alcoholpercentage"
                     class="form-control"
