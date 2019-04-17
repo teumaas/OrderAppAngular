@@ -49,7 +49,7 @@
               </fieldset>
               <fieldset class="form-group">
                     <select class="form-control selector" (change)="onCategorySelected($event)">
-                            <option value="{{product?.category._id}}" selected>{{product?.category.title}}</option>
+                            <option value="{{product?.category?._id}}" selected>{{product?.category?.title}}</option>
                             <option *ngFor="let c of categories" value="{{c?._id}}">{{c?.title}}</option>
                     </select>
               </fieldset>

@@ -14,13 +14,13 @@ import { Menu } from '../../../../interfaces/Menu.interface';
 })
 export class EditMenuComponent implements OnInit {
 
-  private currentMenu: Menu;
-  private originalMenu: Menu;
-  private editMenuForm: FormGroup;
-  private categories;
+  public currentMenu: Menu;
+  public originalMenu: Menu;
+  public editMenuForm: FormGroup;
+  public categories;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private fB: FormBuilder, private aRoute: ActivatedRoute, private router: Router, private menuService: MenuService, private categoryService: CategoryService) {
+  constructor(public fB: FormBuilder, public aRoute: ActivatedRoute, public router: Router, public menuService: MenuService, public categoryService: CategoryService) {
     this.editMenuForm = this.fB.group({
       'title': ['', Validators.required ],
       'category': ['', !Validators.required ],

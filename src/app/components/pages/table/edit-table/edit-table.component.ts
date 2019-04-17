@@ -12,11 +12,11 @@ import { Table } from '../../../../interfaces/Table.interface';
 })
 export class EditTableComponent implements OnInit {
 
-  private currentTable: Table;
-  private originalTable: Table;
-  private editTableForm: FormGroup;
+  public currentTable: Table;
+  public originalTable: Table;
+  public editTableForm: FormGroup;
 
-  constructor(private fB: FormBuilder, private aRoute: ActivatedRoute, private router: Router, private tableService: TableService) {
+  constructor(public fB: FormBuilder, public aRoute: ActivatedRoute, public router: Router, public tableService: TableService) {
     this.editTableForm = this.fB.group({
       'number': ['', Validators.required ],
     });

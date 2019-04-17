@@ -9,9 +9,9 @@ import { Menu } from '../../../interfaces/Menu.interface';
 })
 export class MenuComponent implements OnInit {
 
-  private menus: Menu;
+  public menus: Menu;
 
-  constructor(private menuService: MenuService) { }
+  constructor(public menuService: MenuService) { }
 
   ngOnInit() {
     this.menuService.getMenus().subscribe(menus => {

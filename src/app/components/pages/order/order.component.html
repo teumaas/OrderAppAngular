@@ -22,7 +22,7 @@
                   <tbody> 
 
                     <tr *ngFor="let order of orders">
-                      <td *ngFor="let product of order?.product">{{product.name}}</td>
+                      <td *ngFor="let product of order?.product">{{product?.name}}</td>
                       <td>Not working.</td>
                       <td>
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">

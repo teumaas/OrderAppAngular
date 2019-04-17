@@ -13,13 +13,13 @@ import { Category } from '../../../../interfaces/Category.interface';
 })
 export class EditCategoryComponent implements OnInit {
 
-  private currentCategory: Category;
-  private originalCategory: Category;
-  private editCategoryForm: FormGroup;
+  public currentCategory: Category;
+  public originalCategory: Category;
+  public editCategoryForm: FormGroup;
   public products;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private fB: FormBuilder, private aRoute: ActivatedRoute, private router: Router, private categoryService: CategoryService, private productService: ProductService) {
+  constructor(public fB: FormBuilder, public aRoute: ActivatedRoute, public router: Router, public categoryService: CategoryService, public productService: ProductService) {
     this.editCategoryForm = this.fB.group({
       'title': ['', Validators.required ],
       'product': ['', !Validators.required ],

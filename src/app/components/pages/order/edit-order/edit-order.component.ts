@@ -12,11 +12,11 @@ import { Order } from '../../../../interfaces/Order.interface';
 })
 export class EditOrderComponent implements OnInit {
 
-  private currentOrder: Order;
-  private originalOrder: Order;
-  private editOrderForm: FormGroup;
+  public currentOrder: Order;
+  public originalOrder: Order;
+  public editOrderForm: FormGroup;
 
-  constructor(private fB: FormBuilder, private aRoute: ActivatedRoute, private router: Router, private ordersService: OrderService) {
+  constructor(public fB: FormBuilder, public aRoute: ActivatedRoute, public router: Router, public ordersService: OrderService) {
     this.editOrderForm = this.fB.group({
       'product': ['', Validators.required ],
       'table': ['', Validators.required ]
@@ -53,7 +53,7 @@ export class EditOrderComponent implements OnInit {
     this.editOrderForm.controls['table'].setValue(this.orders.table);
   }
 
-  saveProduct(): void {
+  saveOrder(): void {
     const orders: Order = {
       _id: this.orders._id,
       product: this.editOrderForm.value.product,

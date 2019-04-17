@@ -9,10 +9,10 @@ import { UserDetails } from '../../../interfaces/UserDetails.interface';
 })
 export class NavbarComponent implements OnInit {
 
-  private AppName: String = 'Order App';
-  private details: UserDetails;
+  public AppName: String = 'Order App';
+  public details: UserDetails;
 
-  constructor(private auth: AuthService) { }
+  constructor(public auth: AuthService) { }
 
   ngOnInit() {
     this.auth.loggedIn().subscribe(user => {

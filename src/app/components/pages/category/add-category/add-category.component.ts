@@ -14,11 +14,11 @@ import { Category } from '../../../../interfaces/Category.interface';
 })
 export class AddCategoryComponent implements OnInit {
 
-  private addCategoryForm: FormGroup;
+  public addCategoryForm: FormGroup;
   public products;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private fB: FormBuilder, private router: Router, private categoryService: CategoryService, private productService: ProductService) {
+  constructor(public fB: FormBuilder, public router: Router, public categoryService: CategoryService, public productService: ProductService) {
     this.addCategoryForm = this.fB.group({
       'title': ['', Validators.required ],
       'product': ['', !Validators.required ],

@@ -12,15 +12,16 @@ import { Table } from '../../../../interfaces/Table.interface';
 })
 export class AddTableComponent implements OnInit {
 
-  private addTableForm: FormGroup;
+  public addTableForm: FormGroup;
+  submitted = false;
 
-  constructor(private fB: FormBuilder, private router: Router, private tableService: TableService) {
-    this.addTableForm = this.fB.group({
-      'number': ['', Validators.required ]
-    });
+  constructor(public fB: FormBuilder, public router: Router, public tableService: TableService) {
   }
 
   ngOnInit() {
+    this.addTableForm = this.fB.group({
+      'number': ['', Validators.required ]
+    });
   }
 
   saveTable(): void {
@@ -28,14 +29,19 @@ export class AddTableComponent implements OnInit {
       number: this.addTableForm.value.number
     };
 
-    this.tableService.postTable(table)
+    this.submitted = true;
+
+    if (this.addTableForm.valid) {
+      this.tableService.postTable(table)
       .subscribe(
           () => this.onSaveComplete(),
           (error: any) => console.log(error));
+    }
   }
 
   onSaveComplete(): void {
     this.router.navigate(['/tables']);
   }
 
+  get f() { return this.addTableForm.controls; }
 }

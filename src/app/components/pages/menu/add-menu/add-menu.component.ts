@@ -14,10 +14,10 @@ import { Menu } from '../../../../interfaces/Menu.interface';
 })
 export class AddMenuComponent implements OnInit {
 
-  private addMenuForm: FormGroup;
+  public addMenuForm: FormGroup;
   public categories;
 
-  constructor(private fB: FormBuilder, private router: Router, private menuService: MenuService, private categoryService: CategoryService) {
+  constructor(public fB: FormBuilder, public router: Router, public menuService: MenuService, public categoryService: CategoryService) {
     this.addMenuForm = this.fB.group({
       'title': ['', Validators.required ],
       'category': ['', !Validators.required ],

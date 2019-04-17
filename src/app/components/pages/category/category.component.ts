@@ -10,9 +10,9 @@ import { Category } from '../../../interfaces/Category.interface';
 })
 export class CategoryComponent implements OnInit {
 
-  private categories: Category;
+  public categories: Category;
 
-  constructor(private categoryService: CategoryService, private productService: ProductService) { }
+  constructor(public categoryService: CategoryService, public productService: ProductService) { }
 
   ngOnInit() {
     this.categoryService.getCategories().subscribe(categories => {

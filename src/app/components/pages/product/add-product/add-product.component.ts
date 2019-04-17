@@ -14,23 +14,25 @@ import { Product } from '../../../../interfaces/Product.interface';
 })
 export class AddProductComponent implements OnInit {
 
-  private newProductForm: FormGroup;
+  public newProductForm: FormGroup;
   public categories;
+  submitted = false;
 
   // tslint:disable-next-line:max-line-length
   constructor(private fB: FormBuilder, private router: Router, private productService: ProductService, private categoryService: CategoryService) {
+   }
+
+  ngOnInit() {
     this.newProductForm = this.fB.group({
       'name': ['', Validators.required ],
       'brand': ['', Validators.required ],
       'description': ['', Validators.required ],
       'imagePath': ['', !Validators.required ],
-      'alcoholPercentage': ['', !Validators.required ],
+      'alcoholPercentage': [!Validators.required, Validators.pattern('[0-9]*')],
       'category': ['', !Validators.required ],
-      'price': ['', Validators.required ],
+      'price': ['', Validators.required],
     });
-   }
 
-  ngOnInit() {
     this.categoryService.getCategories()
     .subscribe(result => {
       this.categories = result;
@@ -48,14 +50,19 @@ export class AddProductComponent implements OnInit {
       category: this.newProductForm.value.category
     };
 
-    this.productService.postProduct(product)
+    this.submitted = true;
+
+    if (this.newProductForm.valid) {
+      this.productService.postProduct(product)
       .subscribe(
           () => this.onSaveComplete(),
           (error: any) => console.log(error));
+    }
   }
 
   onSaveComplete(): void {
     this.router.navigate(['/products']);
   }
 
+  get f() { return this.newProductForm.controls; }
 }

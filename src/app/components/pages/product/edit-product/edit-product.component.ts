@@ -15,10 +15,10 @@ import { Product } from '../../../../interfaces/Product.interface';
 
 export class EditProductComponent implements OnInit {
 
-  private currentProduct: Product;
-  private originalProduct: Product;
+  public currentProduct: Product;
+  public originalProduct: Product;
 
-  private editProductForm: FormGroup;
+  public editProductForm: FormGroup;
   public categories;
 
   // tslint:disable-next-line:max-line-length

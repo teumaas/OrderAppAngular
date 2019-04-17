@@ -13,9 +13,9 @@ import { Table } from '../../../interfaces/Table.interface';
 })
 export class OrderComponent implements OnInit {
 
-  private orders: Order;
+  public orders: Order;
 
-  constructor(private orderService: OrderService, private productService: ProductService, private tableService: TableService) { }
+  constructor(public orderService: OrderService, public productService: ProductService, public tableService: TableService) { }
 
   ngOnInit() {
     this.orderService.getOrders().subscribe(orders => {

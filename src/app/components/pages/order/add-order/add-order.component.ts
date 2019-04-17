@@ -14,12 +14,12 @@ import { TableService } from '../../../../services/table.service';
 })
 export class AddOrderComponent implements OnInit {
 
-  private addOrderForm: FormGroup;
+  public addOrderForm: FormGroup;
   public products;
   public tables;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private fB: FormBuilder, private router: Router, private orderService: OrderService, private productService: ProductService, private tableService: TableService) {
+  constructor(public fB: FormBuilder, public router: Router, public orderService: OrderService, public productService: ProductService, public tableService: TableService) {
     this.addOrderForm = this.fB.group({
       'product': ['', Validators.required ],
       'table': ['', Validators.required ]

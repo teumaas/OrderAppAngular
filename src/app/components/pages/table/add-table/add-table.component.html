@@ -15,9 +15,14 @@
               <fieldset class="form-group">
                   <input
                       formControlName="number"
-                      placeholder="Nummer"
+                      placeholder="Tafelnummer"
                       class="form-control"
-                      type="text" />
+                      type="text"
+                      [ngClass]="{ 'is-invalid help-block': submitted && f.number.errors }" />
+                      <div *ngIf="submitted && f.number.errors" class="help-block">
+                          <div style="color: #dc3545" *ngIf="f.number.errors.required">Tafelnummer is verplicht!</div>
+                      </div>
+                      
               </fieldset>
               <button class="btn btn-primary pull-xs-right" type="submit">
                   Opslaan

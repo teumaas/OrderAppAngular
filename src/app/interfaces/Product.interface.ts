@@ -1,3 +1,5 @@
+import { Category } from './Category.interface';
+
 export interface Product {
     _id?: string;
     name: string;
@@ -5,6 +7,6 @@ export interface Product {
     description: string;
     imagePath?: string;
     alcoholPercentage?: number;
-    category?: string;
+    category?: Category;
     price: number;
  }

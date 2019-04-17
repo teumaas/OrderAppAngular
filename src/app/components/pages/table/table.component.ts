@@ -9,9 +9,9 @@ import { Table } from '../../../interfaces/Table.interface';
 })
 export class TableComponent implements OnInit {
 
-  private tables: Table;
+  public tables: Table;
 
-  constructor(private tableService: TableService) { }
+  constructor(public tableService: TableService) { }
 
   ngOnInit() {
     this.tableService.getTables().subscribe(tables => {

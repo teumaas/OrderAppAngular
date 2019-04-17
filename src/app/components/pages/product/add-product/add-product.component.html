@@ -17,38 +17,61 @@
                       formControlName="name"
                       placeholder="Naam"
                       class="form-control"
-                      type="text" />
+                      type="text" 
+                      [ngClass]="{ 'is-invalid help-block': submitted && f.name.errors }"
+                      />
+                      
+                      <div *ngIf="submitted && f.name.errors" class="help-block">
+                          <div style="color: #dc3545" *ngIf="f.name.errors.required">Naam is verplicht!</div>
+                      </div>
               </fieldset>
               <fieldset class="form-group">
                   <input
                       formControlName="brand"
                       placeholder="Merk"
                       class="form-control"
-                      type="text" />
+                      type="text"
+                      [ngClass]="{ 'is-invalid help-block': submitted && f.brand.errors }" />
+                      <div *ngIf="submitted && f.brand.errors" class="help-block">
+                          <div style="color: #dc3545" *ngIf="f.brand.errors.required">Merknaam is verplicht!</div>
+                      </div>
               </fieldset>
               <fieldset class="form-group">
                   <input
                       formControlName="description"
                       placeholder="Beschrijving"
                       class="form-control"
-                      type="text" />
+                      type="text"
+                      [ngClass]="{ 'is-invalid help-block': submitted && f.description.errors }" />
+                      <div *ngIf="submitted && f.description.errors" class="help-block">
+                          <div style="color: #dc3545" *ngIf="f.description.errors.required">Beschrijving is verplicht!</div>
+                      </div>
               </fieldset>
               <fieldset class="form-group">
                 <input
                     formControlName="imagePath"
                     placeholder="Afbeelding"
                     class="form-control"
-                    type="text" />
+                    type="text"                      
+                    [ngClass]="{ 'is-invalid help-block': submitted && f.imagePath.errors }" />
+                    <div *ngIf="submitted && f.imagePath.errors" class="help-block">
+                        <div style="color: #dc3545" *ngIf="f.imagePath.errors.required">Afbeelding is verplicht!</div>
+                    </div>
               </fieldset>
               <fieldset class="form-group">
                 <input
                     formControlName="alcoholPercentage"
                     placeholder="Alcoholpercentage"
                     class="form-control"
-                    type="number    " />
+                    type="number"
+                    [ngClass]="{ 'is-invalid help-block': submitted && f.alcoholPercentage.errors }" />
+                    <div *ngIf="submitted && f.alcoholPercentage.errors" class="help-block">
+                        <div style="color: #dc3545" *ngIf="f.alcoholPercentage.errors.pattern">Dit mag allen nummer van percentage bevatten.</div>
+                    </div>
               </fieldset>
-              <fieldset class="form-group">
+              <fieldset  class="form-group">
                 <select class="form-control" formControlName="category">
+                    <option [ngValue]="null" selected>Geen category</option>
                     <option *ngFor="let c of categories" value="{{c._id}}" >{{c.title}}</option>
                 </select>
               </fieldset>
@@ -57,7 +80,11 @@
                     formControlName="price"
                     placeholder="Prijs"
                     class="form-control"
-                    type="number" />
+                    type="number"
+                    [ngClass]="{ 'is-invalid help-block': submitted && f.price.errors }" />
+                    <div *ngIf="submitted && f.price.errors" class="help-block">
+                        <div style="color: #dc3545" *ngIf="f.price.errors.required">Prijs is verplicht!</div>
+                    </div>
               </fieldset>
               <button class="btn btn-primary pull-xs-right" type="submit">
                   Opslaan
