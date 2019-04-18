@@ -58,17 +58,6 @@
                     </div>
               </fieldset>
               <fieldset class="form-group">
-                    <select class="custom-select" 
-                            (change)="onCategorySelected($event)" 
-                            [ngClass]="{ 'is-invalid help-block': submitted && f.category.errors }">
-                        <option disabled>Selecteer categorie...</option>
-                        <option *ngFor="let c of categories" value="{{c._id}}" selected>{{c.title}}</option>
-                    </select>
-                    <div *ngIf="submitted && f.category.errors" class="help-block">
-                      <div style="color: #dc3545" *ngIf="f.category.errors.required">Categorie is verplicht!</div>
-                  </div>
-              </fieldset>
-              <fieldset class="form-group">
                 <input
                     formControlName="price"
                     placeholder="Prijs"

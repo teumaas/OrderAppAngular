@@ -19,7 +19,6 @@ export class EditProductComponent implements OnInit {
   public originalProduct: Product;
 
   public editProductForm: FormGroup;
-  public categories;
   submitted = false;
 
   // tslint:disable-next-line:max-line-length
@@ -49,7 +48,6 @@ export class EditProductComponent implements OnInit {
       'brand': ['', Validators.required ],
       'description': ['', Validators.required ],
       'alcoholPercentage': ['', Validators.required ],
-      'category': ['', Validators.required ],
       'price': ['', Validators.required],
     });
 
@@ -69,7 +67,6 @@ export class EditProductComponent implements OnInit {
     this.product = product;
     this.categoryService.getCategories()
     .subscribe(result => {
-      this.categories = result;
       this.updateValues();
     });
   }
@@ -90,8 +87,7 @@ export class EditProductComponent implements OnInit {
       brand: this.editProductForm.value.brand,
       price: this.editProductForm.value.price,
       description: this.editProductForm.value.description,
-      alcoholPercentage: this.editProductForm.value.alcoholPercentage,
-      category: this.categories
+      alcoholPercentage: this.editProductForm.value.alcoholPercentage
     };
     this.submitted = true;
 
@@ -105,9 +101,5 @@ export class EditProductComponent implements OnInit {
 
   onSaveComplete(): void {
     this.router.navigate(['/products']);
-  }
-
-  onCategorySelected(event) {
-    this.categories = event.target.value;
   }
 }
